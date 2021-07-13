@@ -11,7 +11,8 @@ class Thread extends Model
 
     protected $fillable = [
         'title',
-        'body'
+        'body',
+        'slug'
     ];
 
     public function user(){

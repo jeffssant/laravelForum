@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Thread;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ThreadController extends Controller
 {
@@ -20,7 +22,7 @@ class ThreadController extends Controller
      */
     public function index()
     {
-        $threads = $this->thread->paginate(15);
+        $threads = $this->thread->orderBy('created_at', 'DESC')->paginate(15);
 
         return view('threads.index', compact('threads'));
     }
@@ -44,8 +46,12 @@ class ThreadController extends Controller
     public function store(Request $request)
     {
         try {
+            $thread = $request->all();
+            $thread['slug'] = Str::slug($thread['title']);
 
-            $this->thread->create($request->all());
+            $user = User::find(31);
+
+            $user->threads()->create($thread);
 
             dd('Tópico criado com sucesso');
 
@@ -59,23 +65,27 @@ class ThreadController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  string  $slug
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        return redirect()->route('threads.edit', $id);
+        $thread = $this->thread->whereSlug($slug)->first();
+
+        if(!$thread) return redirect()->route('threads.index');
+
+        return view('threads.show', compact('thread'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  string  $slug
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($slug)
     {
-        $thread = $this->thread->find($id);
+        $thread = $this->thread->whereSlug($slug)->first();
 
         return view('threads.edit', compact('thread'));
     }
@@ -84,14 +94,14 @@ class ThreadController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  $slug
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $slug)
     {
         try {
 
-            $thread = $this->thread->find($id);
+            $thread = $this->thread->whereSlug($slug)->first();
             $thread->update($request->all());
 
             dd('Tópico atualizado com sucesso');
@@ -106,14 +116,14 @@ class ThreadController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  string  $slug
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($slug)
     {
         try {
 
-            $thread = $this->thread->find($id);
+            $thread = $this->thread->whereSlug($slug)->first();
             $thread->delete();
 
             dd('Tópico removido com sucesso');
