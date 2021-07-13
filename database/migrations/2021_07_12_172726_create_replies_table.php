@@ -22,7 +22,7 @@ class CreateRepliesTable extends Migration
 
             $table->foreign('thread_id')
                   ->references('id')
-                  ->on('users')
+                  ->on('threads')
                   ->onDelete('cascade');
 
             $table->foreign('user_id')
