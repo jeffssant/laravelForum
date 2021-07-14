@@ -40,21 +40,24 @@
             <hr>
         </div>
 
-        <div class="col-12">
-            <h5>Respostas</h5>
-            <hr>
+        @if ($thread->replies->count())
+            <div class="col-12">
+                <h5>Respostas</h5>
+                <hr>
 
-            @foreach ($thread->replies as $reply )
-                <div class="card mb-3">
-                    <div class="card-body">
-                        {{$reply->reply}}
+                @foreach ($thread->replies as $reply )
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            {{$reply->reply}}
+                        </div>
+                        <div class="card-footer">
+                            <small>Respondido por {{$reply->user->name}} há {{$reply->created_at->diffForHumans()}}</small>
+                        </div>
                     </div>
-                    <div class="card-footer">
-                        <small>Respondido por {{$reply->user->name}} há {{$reply->created_at->diffForHumans()}}</small>
-                    </div>
-                </div>
-            @endforeach
-        </div>
+                @endforeach
+            </div>
+        @endif
+
 
         <div class="col-12">
             <hr>
@@ -63,7 +66,12 @@
                 <input type="hidden" name="thread_id" value="{{$thread->id}}">
                 <div class="form-group">
                     <label>Responder</label>
-                    <textarea name="reply" cols="30" rows="5" class="form-control"></textarea>
+                    <textarea name="reply" cols="30" rows="5" class="form-control @error('reply') is-invalid @enderror"></textarea>
+                    @error('reply')
+                        <div class="invalid-feedback">
+                            {{$message}}
+                        </div>
+                    @enderror
                 </div>
 
                 <button type="submit" class="btn btn-primary"> Responder</button>
