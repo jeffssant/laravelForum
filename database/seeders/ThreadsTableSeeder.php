@@ -2,17 +2,18 @@
 
 namespace Database\Seeders;
 
+use App\Models\Thread;
 use Illuminate\Database\Seeder;
 
-class DatabaseSeeder extends Seeder
+class ThreadsTableSeeder extends Seeder
 {
     /**
-     * Seed the application's database.
+     * Run the database seeds.
      *
      * @return void
      */
     public function run()
     {
-       $this->call(ThreadsTableSeeder::class);
+        Thread::factory()->count(30)->create();
     }
 }

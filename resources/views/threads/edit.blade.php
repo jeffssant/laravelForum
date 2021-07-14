@@ -13,6 +13,13 @@
                 @csrf
                 @method('PUT')
 
+                <label>Canal</label>
+                <select name="channel_id" class="form-control mb-3">
+                    @foreach ($channels as $channel)
+                        <option value="{{$channel->id}}" class="form-group" @if ($thread->channel_id === $channel->id) selected @endif>{{$channel->name}}</option>
+                    @endforeach
+                </select>
+
                 <div class="form-group">
                     <label for="">Titulo</label>
                     <input type="text" class="form-control" value="{{$thread->title}}" name="title">

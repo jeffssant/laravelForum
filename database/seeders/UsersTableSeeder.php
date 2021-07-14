@@ -2,7 +2,8 @@
 
 namespace Database\Seeders;
 
-
+use App\Models\Thread;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class UsersTableSeeder extends Seeder
@@ -14,8 +15,8 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::factory(5)->create()->each(function($user){
-            $thread = \App\Models\Thread::factory()->count(3)->make();
+        User::factory(5)->create()->each(function($user){
+            $thread = Thread::factory()->count(3)->make();
             $user->threads()->saveMany($thread);
         });
     }

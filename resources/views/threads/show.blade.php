@@ -12,8 +12,10 @@
 
                 <div class="card-header">
 
-                  <small>Criado por: {{$thread->user->name}} há {{$thread->created_at->diffForHumans()}}</small>
-
+                    <small>Criado por: {{$thread->user->name}} há {{$thread->created_at->diffForHumans()}} </small> <br>
+                    <span class="badge badge-primary">
+                        {{$thread->channel->name}}
+                    </span>
                 </div>
 
                 <div class="card-body">

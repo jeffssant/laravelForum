@@ -12,7 +12,8 @@ class Thread extends Model
     protected $fillable = [
         'title',
         'body',
-        'slug'
+        'slug',
+        'channel_id'
     ];
 
     public function user(){
