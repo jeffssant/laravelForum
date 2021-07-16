@@ -40,7 +40,8 @@
                             <a href="#" class="nav-link dropdown-toggle" id="channels" role="button" data-toggle="dropdown">Canais</a>
                             <div class="dropdown-menu">
                                 <a href="{{route('threads.index')}}" class="dropdown-item">Todos</a>
-                                @foreach(\App\models\Channel::all(['slug', 'name']) as $channel)
+                                @inject('channel', 'App\Models\Channel')
+                                @foreach($channel->all(['slug', 'name']) as $channel)
                                     <a href="{{route('threads.index', ['channel' => $channel->slug])}}" class="dropdown-item">{{$channel->name}}</a>
                                 @endforeach
                             </div>

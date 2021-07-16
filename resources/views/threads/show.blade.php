@@ -22,20 +22,24 @@
                     {{$thread->body}}
                 </div>
 
-                <div class="card-footer">
+                @can('update', $thread)
+                    <div class="card-footer">
 
-                    <a href="{{route('threads.edit', $thread->slug)}}" class="btn btn-sm btn-primary ">Editar</a>
-                    <a  href="#" class="btn btn-sm btn-danger"
-                        onclick="event.preventDefault(); document.querySelector('.thread-rm').submit()" >
-                        Delete
-                    </a>
+                        <a href="{{route('threads.edit', $thread->slug)}}" class="btn btn-sm btn-primary ">Editar</a>
+                        <a  href="#" class="btn btn-sm btn-danger"
+                            onclick="event.preventDefault(); document.querySelector('.thread-rm').submit()" >
+                            Delete
+                        </a>
 
-                    <form action="{{route('threads.destroy', $thread->slug)}}" method="POST" class="thread-rm display-none">
-                        @csrf
-                        @method('DELETE')
-                    </form>
+                        <form action="{{route('threads.destroy', $thread->slug)}}" method="POST" class="thread-rm display-none">
+                            @csrf
+                            @method('DELETE')
+                        </form>
 
-                </div>
+                    </div>
+                @endcan
+
+
             </div>
             <hr>
         </div>

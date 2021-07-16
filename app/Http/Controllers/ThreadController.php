@@ -7,6 +7,7 @@ use App\Models\Channel;
 use App\Models\Thread;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class ThreadController extends Controller
@@ -24,7 +25,7 @@ class ThreadController extends Controller
      */
     public function index(Request $request)
     {
-        //dd($request->channel);
+        $this->authorize('access-index-forum');
         $channelParam = $request->channel;
         if($channelParam){
             $threads = Channel::whereSlug($channelParam)->first()->threads()->paginate(15);
@@ -60,7 +61,7 @@ class ThreadController extends Controller
             $thread = $request->all();
             $thread['slug'] = Str::slug($thread['title']);
 
-            $user = User::find(1);
+            $user = User::find(Auth::id());
 
             $thread = $user->threads()->create($thread);
 
@@ -103,7 +104,7 @@ class ThreadController extends Controller
         $thread = $this->thread->whereSlug($slug)->first();
         $channels = Channel::all();
 
-
+        $this->authorize('update', $thread);
         return view('threads.edit', compact('thread', 'channels'));
     }
 
