@@ -12,13 +12,16 @@ class Role extends Model
         'role'
     ];
 
-    public function users() {
-        return $this->hasMany(User::class);
+    public function users()
+    {
+    	return $this->hasMany(User::class);
     }
 
-    public function resources() {
-        return $this->belongsToMany(Resource::class);
+    public function resources()
+    {
+    	return $this->belongsToMany(Resource::class);
     }
+
 
 
 

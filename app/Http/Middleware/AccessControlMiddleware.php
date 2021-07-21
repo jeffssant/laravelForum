@@ -22,6 +22,7 @@ class AccessControlMiddleware
         $ignoreResoutces = config('accesscontrollist')['ignore.resources'];
 
 
+
         if(!in_array($route, $ignoreResoutces)){
             $this->authorize($route);
         }

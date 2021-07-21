@@ -13,7 +13,8 @@ class Resource extends Model
         'is_menu'
     ];
 
-    public function roles(){
-        return $this->belongsToMany(Role::class);
+    public function roles()
+    {
+    	return $this->belongsToMany(Role::class);
     }
 }

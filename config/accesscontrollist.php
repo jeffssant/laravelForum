@@ -2,6 +2,9 @@
 
 return [
     'ignore.resources' => [
-        'threads.show'
+        'threads.show',
+        'users.index',
+        'roles.index',
+        'resources.index',
     ]
 ];

@@ -62,26 +62,28 @@
             </div>
         @endif
 
+        @auth
+            <div class="col-12">
+                <hr>
+                <form action="{{route('replies.store')}}" method="POST">
+                    @csrf
+                    <input type="hidden" name="thread_id" value="{{$thread->id}}">
+                    <div class="form-group">
+                        <label>Responder</label>
+                        <textarea name="reply" cols="30" rows="5" class="form-control @error('reply') is-invalid @enderror"></textarea>
+                        @error('reply')
+                            <div class="invalid-feedback">
+                                {{$message}}
+                            </div>
+                        @enderror
+                    </div>
 
-        <div class="col-12">
-            <hr>
-            <form action="{{route('replies.store')}}" method="POST">
-                @csrf
-                <input type="hidden" name="thread_id" value="{{$thread->id}}">
-                <div class="form-group">
-                    <label>Responder</label>
-                    <textarea name="reply" cols="30" rows="5" class="form-control @error('reply') is-invalid @enderror"></textarea>
-                    @error('reply')
-                        <div class="invalid-feedback">
-                            {{$message}}
-                        </div>
-                    @enderror
-                </div>
+                    <button type="submit" class="btn btn-primary"> Responder</button>
+                </form>
 
-                <button type="submit" class="btn btn-primary"> Responder</button>
-            </form>
+            </div>
+        @endauth
 
-        </div>
     </div>
 
 @endsection
